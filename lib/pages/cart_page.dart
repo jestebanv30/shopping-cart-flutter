@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controllers/cart_controller.dart';
@@ -22,14 +21,20 @@ class CartPage extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: cartController.cartItems.length,
                       itemBuilder: (context, index) {
-                        final product = cartController.cartItems[index];
+                        final cartItem = cartController.cartItems[index];
                         return ListTile(
-                          title: Text(product.name),
-                          subtitle: Text("\$${product.price}"),
+                          leading: CircleAvatar(
+                            child:
+                                Image.network(cartItem.url), // Mostrar imagen
+                          ),
+                          title: Text(cartItem.name),
+                          subtitle: Text(
+                            "\$${cartItem.price} x ${cartItem.quantity} = \$${cartItem.price * cartItem.quantity}",
+                          ),
                           trailing: IconButton(
                             icon: Icon(Icons.remove_shopping_cart),
                             onPressed: () {
-                              cartController.removeFromCart(product);
+                              cartController.removeFromCart(cartItem);
                             },
                           ),
                         );

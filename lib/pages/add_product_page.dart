@@ -6,6 +6,8 @@ class AddProductPage extends StatelessWidget {
   final ProductController productController = Get.find();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController priceController = TextEditingController();
+  final TextEditingController urlController = TextEditingController();
+  final TextEditingController quantityController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,17 +37,37 @@ class AddProductPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
+            TextField(
+              controller: urlController,
+              decoration: InputDecoration(
+                labelText: 'Image URL',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              controller: quantityController,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                labelText: 'Quantity',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 String name = nameController.text;
                 double? price = double.tryParse(priceController.text);
+                String url = urlController.text;
+                int? quantity = int.tryParse(quantityController.text);
 
-                if (name.isNotEmpty && price != null) {
-                  // Adding the product to the list of products
-                  productController.addProduct(name, price);
-                  Get.back(); // Go back to the previous screen
+                if (name.isNotEmpty &&
+                    price != null &&
+                    url.isNotEmpty &&
+                    quantity != null) {
+                  productController.addProduct(name, price, url, quantity);
+                  Get.back(); // Vuelve a la pantalla anterior
                 } else {
-                  // Show error message
                   Get.snackbar(
                     'Error',
                     'Please enter valid product details',

@@ -1,10 +1,10 @@
 import 'package:carrito_2024/pages/cart_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../controllers/product_controller.dart';
-import 'add_product_page.dart';
 
 import '../controllers/cart_controller.dart';
+import '../controllers/product_controller.dart';
+import 'add_product_page.dart';
 
 class ShoppingPage extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
@@ -40,11 +40,17 @@ class ShoppingPage extends StatelessWidget {
             final product = productController.products[index];
             return ListTile(
               leading: CircleAvatar(
-                child: Image.network(
-                    'https://portal.andina.pe/EDPfotografia3/Thumbnail/2017/06/05/000425938W.jpg'),
+                backgroundImage:
+                    NetworkImage(product.url), // Muestra la imagen del producto
               ),
               title: Text(product.name),
-              subtitle: Text("\$${product.price}"),
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Price: \$${product.price.toStringAsFixed(2)}"),
+                  Text("Quantity: ${product.quantity}"),
+                ],
+              ),
               trailing: IconButton(
                 icon: Icon(Icons.add_shopping_cart),
                 onPressed: () {
@@ -59,8 +65,8 @@ class ShoppingPage extends StatelessWidget {
         backgroundColor: Colors.teal,
         child: Icon(Icons.add),
         onPressed: () {
-          Get.to(
-              () => AddProductPage()); // Navega a la página de añadir productos
+          Get.to(() =>
+              AddProductPage()); // Navega a la página para agregar productos
         },
       ),
     );
