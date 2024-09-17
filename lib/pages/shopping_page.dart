@@ -39,6 +39,10 @@ class ShoppingPage extends StatelessWidget {
           itemBuilder: (context, index) {
             final product = productController.products[index];
             return ListTile(
+              leading: CircleAvatar(
+                child: Image.network(
+                    'https://portal.andina.pe/EDPfotografia3/Thumbnail/2017/06/05/000425938W.jpg'),
+              ),
               title: Text(product.name),
               subtitle: Text("\$${product.price}"),
               trailing: IconButton(
